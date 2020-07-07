@@ -1,29 +1,24 @@
 import requests
 from . import forecast
-import random
-import datetime
-import itertools
-import json
-import re
-import sys
-import us
 import csv
-import itertools
-from operator import itemgetter
+import json
 
-BASE_URL = "https://elections.dailykos.com/app/data/"
+BASE_URL = "https://elections.dailykos.com/app/elections/2020"
 
 PRES_CAND_DICT = {
-    "D": "CLINTON",
+    "D": "BIDEN",
     "R": "TRUMP",
 }
 def get_data(filename):
     raw = requests.get(BASE_URL + filename).content.decode("utf-8")
     core = " = ".join(raw.split(" = ")[2:])
-    return json.loads(core)
+    print(core)
+    x = json.loads(core)
+    print(x)
+    return x
 
-clinton_vote_shares = dict((row["date"], row)
-    for row in csv.DictReader(open("data/forecasts/raw/clinton_vote_forecasts_dailykos.csv")))
+biden_vote_shares = dict((row["date"], row)
+    for row in csv.DictReader(open("data/forecasts/raw/biden_vote_forecasts_dailykos.csv")))
 
 class DailyKos(forecast.Forecast):
     def __init__(self):
@@ -31,7 +26,7 @@ class DailyKos(forecast.Forecast):
 
     def load_lookup(self):
         if not self.lookup: 
-            self.lookup = get_data("assign_tables_2016.js")["data"]
+            self.lookup = get_data("assign_tables_2020.js")["data"]
 
     def race_id_to_state(self, race_id):
         office_id = str(self.lookup["races"][str(race_id)]["office_id"])
@@ -62,9 +57,9 @@ class DailyKos(forecast.Forecast):
                         if state == "DC":
                             est_share = None
                         elif party_init == "D":
-                            est_share = float(clinton_vote_shares[date][us.states.lookup(state).name])
+                            est_share = float(biden_vote_shares[date][us.states.lookup(state).name])
                         elif party_init == "R":
-                            est_share = 1 - float(clinton_vote_shares[date][us.states.lookup(state).name])
+                            est_share = 1 - float(biden_vote_shares[date][us.states.lookup(state).name])
                         else:
                             est_share = None
                     else:
@@ -128,7 +123,7 @@ class DailyKos(forecast.Forecast):
 
     def get_historical_predictions(self):
         self.load_lookup()
-        president_data = get_data("presidential_state_forecast_history_2016.js")
+        president_data = get_data("presidential_state_forecast_history_2020.js")
         president = self.process_history(president_data, "P")
         senate_data = get_data("senate_state_forecast_history_2016.js")
         senate = self.process_history(senate_data, "S")

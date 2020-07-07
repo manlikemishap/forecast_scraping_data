@@ -15,6 +15,7 @@ PREDICTION_FIELDS = [
     "est_diff",
     "est_share",
     "est_share_2p",
+    "rating"
 ]
 
 EASTERN = pytz.timezone('US/Eastern')

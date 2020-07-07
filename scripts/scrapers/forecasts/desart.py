@@ -17,7 +17,7 @@ MISSPELLINGS = {
     "Akansas": "Arkansas"
 }
 
-clinton_shares = pd.read_excel("data/forecasts/raw/DeSart and Holbrook 11-7 State Forecasts.xlsx").set_index("State")["Clinton 2PPV"].to_dict()
+biden_shares = pd.read_excel("data/forecasts/raw/DeSart and Holbrook 11-7 State Forecasts.xlsx").set_index("State")["Clinton 2PPV"].to_dict()
 
 def parse_page(path):
     d_match = re.search(r"(\d{2})(\d{2})", path)
@@ -37,11 +37,11 @@ def parse_page(path):
                 state_name = MISSPELLINGS.get(state_name, state_name)
                 state_abbr = us.states.lookup(state_name).abbr
                 base_prob = float(row[i * 2 + 1]) / 100
-                clinton_prob = base_prob if i == 0 else 1 - base_prob
+                biden_prob = base_prob if i == 0 else 1 - base_prob
                 if date == "2016-11-07":
-                    clinton_share = clinton_shares[state_name] / 100
+                    biden_share = biden_shares[state_name] / 100
                 else:
-                    clinton_share = None
+                    biden_share = None
                 arr.append({
                     "date": date,
                     "model": "desart",
@@ -49,10 +49,10 @@ def parse_page(path):
                     "state": state_abbr,
                     "party": "D",
                     "candidate": "CLINTON",
-                    "win_prob": clinton_prob,
+                    "win_prob": biden_prob,
                     "est_diff": None,
                     "est_share": None,
-                    "est_share_2p": clinton_share,
+                    "est_share_2p": biden_share,
                 })
                 arr.append({
                     "date": date,
@@ -61,10 +61,10 @@ def parse_page(path):
                     "state": state_abbr,
                     "party": "R",
                     "candidate": "TRUMP",
-                    "win_prob": 1 - clinton_prob,
+                    "win_prob": 1 - biden_prob,
                     "est_diff": None,
                     "est_share": None,
-                    "est_share_2p": 1 - clinton_share if clinton_share != None else None,
+                    "est_share_2p": 1 - biden_share if biden_share != None else None,
                 })
     return arr
 

@@ -41,7 +41,7 @@ Both the `original/*.csv` and `combined.csv` files use the following structure, 
 
 Forecasters represented candidates' expected margin of victory in slightly different ways that can't all be converted into a single, perfectly-comparable metric. Ultimately, though, we can group the forecasts into two types:
 
-- Forecasts that allow calculation of Trump’s expected __percentage-point margin of victory over Clinton__, among all votes. This group contains FiveThirtyEight, PollSavvy, the New York Times, the Princeton Election Consortium, and the Huffington Post.
+- Forecasts that allow calculation of Trump’s expected __percentage-point margin of victory over Biden__, among all votes. This group contains FiveThirtyEight, PollSavvy, the New York Times, the Princeton Election Consortium, and the Huffington Post.
 
 - Forecasts that allow calculation of Trump’s expected __share of the two-party vote__ (i.e., excluding Johnson, Stein, and McMullin). This group contains FiveThirtyEight, PollSavvy, Daily Kos, Kremp/Slate, and Desart and Holbrook. (PredictWise did not make any vote-share projections.)
 

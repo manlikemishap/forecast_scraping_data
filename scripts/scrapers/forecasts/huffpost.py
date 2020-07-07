@@ -66,7 +66,7 @@ class HuffingtonPost(forecast.Forecast):
             delimiter="\t"
         )
         for row in rows:
-            dem_prob = float(row["clinton_win_prob"])
+            dem_prob = float(row["biden_win_prob"])
             dem_diff = float(row["diff_xibar"]) / 100
             for party in [ "D", "R" ]:
                 arr.append({
